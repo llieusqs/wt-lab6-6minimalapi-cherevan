@@ -4,7 +4,7 @@ using wt_lab6_6minimalapi_cherevan.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // =========================================================
-// БЛОК 6. Настройка Swagger UI (работает на .NET 8)
+// БЛОК 6. Настройка Swagger UI
 // =========================================================
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(); 
@@ -12,13 +12,10 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // =========================================================
-// БЛОК 6. Включение Swagger
+// БЛОК 6. Включение Swagger (без проверки на Development)
 // =========================================================
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();      // Генерация swagger.json
-    app.UseSwaggerUI();    // Красивый интерфейс: /swagger
-}
+app.UseSwagger();      // Генерация swagger.json
+app.UseSwaggerUI();    // Красивый интерфейс: /swagger
 
 // =========================================================
 // БЛОК 1. Базовые эндпоинты
