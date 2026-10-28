@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("wt-lab6-6minimalapi-cherevan")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fb0b3739812b07bdc4545f8a02e1ee579a18e252")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f75a589d77ba3eced5ad70f435e62abe1bbc199c")]
 [assembly: System.Reflection.AssemblyProductAttribute("wt-lab6-6minimalapi-cherevan")]
 [assembly: System.Reflection.AssemblyTitleAttribute("wt-lab6-6minimalapi-cherevan")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

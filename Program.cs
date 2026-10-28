@@ -4,20 +4,18 @@ using wt_lab6_6minimalapi_cherevan.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // =========================================================
-// БЛОК 6 (9.2). Настройка OpenAPI и Swagger UI
+// БЛОК 6. Настройка Swagger UI (работает на .NET 8)
 // =========================================================
-builder.Services.AddOpenApi(); // Подключение OpenAPI
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(); // Подключение графического интерфейса Swagger
+builder.Services.AddSwaggerGen(); 
 
 var app = builder.Build();
 
 // =========================================================
-// БЛОК 6 (9.2). Включение интерфейсов документации
+// БЛОК 6. Включение Swagger
 // =========================================================
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();      // Эндпоинт: /openapi/v1.json
     app.UseSwagger();      // Генерация swagger.json
     app.UseSwaggerUI();    // Красивый интерфейс: /swagger
 }
@@ -25,10 +23,8 @@ if (app.Environment.IsDevelopment())
 // =========================================================
 // БЛОК 1. Базовые эндпоинты
 // =========================================================
-// Уровень 2: Проверка работы
 app.MapGet("/", () => "Minimal API работает!");
 
-// Уровень 3: Информация о приложении (JSON)
 app.MapGet("/api/info", () =>
 {
     return new
@@ -42,12 +38,10 @@ app.MapGet("/api/info", () =>
 // =========================================================
 // БЛОК 3. GET-запросы (Чтение)
 // =========================================================
-// 6.1 и 6.3. Получение списка задач + Фильтрация (query-параметр search)
 app.MapGet("/api/tasks", (string? search) =>
 {
     var tasks = TaskStore.Tasks.AsEnumerable();
 
-    // Фильтрация, если передан параметр search
     if (!string.IsNullOrWhiteSpace(search))
     {
         tasks = tasks.Where(x =>
@@ -55,19 +49,14 @@ app.MapGet("/api/tasks", (string? search) =>
             x.Description.Contains(search, StringComparison.OrdinalIgnoreCase));
     }
 
-    return Results.Ok(tasks); // Статус 200 OK
+    return Results.Ok(tasks); // 200 OK
 });
 
-// 6.2. Получение задачи по ID
 app.MapGet("/api/tasks/{id}", (int id) =>
 {
     var task = TaskStore.Tasks.FirstOrDefault(x => x.Id == id);
-    
-    // 404 Not Found, если объекта нет
-    if (task == null)
-        return Results.NotFound();
-        
-    return Results.Ok(task); // Статус 200 OK
+    if (task == null) return Results.NotFound(); // 404
+    return Results.Ok(task); // 200 OK
 });
 
 // =========================================================
@@ -75,35 +64,28 @@ app.MapGet("/api/tasks/{id}", (int id) =>
 // =========================================================
 app.MapPost("/api/tasks", (TaskItem task) =>
 {
-    // БЛОК 6 (9.1). Проверка на некорректные данные (400 Bad Request)
+    // БЛОК 6 (9.1). Проверка на 400 Bad Request
     if (string.IsNullOrWhiteSpace(task.Title))
         return Results.BadRequest(new { error = "Название задачи не может быть пустым" });
 
-    // 7.1. Автоматическая генерация ID
     var newId = TaskStore.Tasks.Count == 0 
         ? 1 
         : TaskStore.Tasks.Max(x => x.Id) + 1;
 
     task.Id = newId;
-    TaskStore.Tasks.Add(task); // Добавление в коллекцию
+    TaskStore.Tasks.Add(task); 
 
-    // 7.2. Возврат статуса 201 Created и URL созданного ресурса
-    return Results.Created($"/api/tasks/{task.Id}", task);
+    return Results.Created($"/api/tasks/{task.Id}", task); // 201 Created
 });
 
 // =========================================================
 // БЛОК 5. PUT и DELETE
 // =========================================================
-// 8.1. Изменение задачи по ID (PUT)
 app.MapPut("/api/tasks/{id}", (int id, TaskItem updatedTask) =>
 {
     var task = TaskStore.Tasks.FirstOrDefault(x => x.Id == id);
-    
-    // 404 Not Found, если объекта нет
-    if (task == null) 
-        return Results.NotFound();
+    if (task == null) return Results.NotFound(); // 404
 
-    // Обновление свойств
     task.Title = updatedTask.Title;
     task.Description = updatedTask.Description;
     task.Status = updatedTask.Status;
@@ -112,25 +94,20 @@ app.MapPut("/api/tasks/{id}", (int id, TaskItem updatedTask) =>
     task.AssigneeId = updatedTask.AssigneeId;
     task.DueDate = updatedTask.DueDate;
 
-    return Results.Ok(task); // Статус 200 OK
+    return Results.Ok(task); // 200 OK
 });
 
-// 8.2. Удаление задачи по ID (DELETE)
 app.MapDelete("/api/tasks/{id}", (int id) =>
 {
     var task = TaskStore.Tasks.FirstOrDefault(x => x.Id == id);
-    
-    // 404 Not Found, если объекта нет
-    if (task == null) 
-        return Results.NotFound();
+    if (task == null) return Results.NotFound(); // 404
 
-    TaskStore.Tasks.Remove(task); // Удаление из коллекции
-    
-    return Results.NoContent(); // Статус 204 No Content
+    TaskStore.Tasks.Remove(task); 
+    return Results.NoContent(); // 204 No Content
 });
 
-
-// БЛОК 7 (10.2). Настройка порта для публикации на Render
+// =========================================================
+// БЛОК 7. Настройка порта для Render
 // =========================================================
 var port = Environment.GetEnvironmentVariable("PORT") ?? "10000";
 app.Run($"http://0.0.0.0:{port}");
