@@ -1,0 +1,55 @@
+@host = http://localhost:5246
+
+### 1. GET - Получить все задачи
+GET {{host}}/api/tasks
+
+### 2. GET - Получить задачу по ID
+GET {{host}}/api/tasks/1
+
+### 3. GET - Фильтрация по слову "API"
+GET {{host}}/api/tasks?search=API
+
+### 4. POST - Создать новую задачу
+POST {{host}}/api/tasks
+Content-Type: application/json
+
+{
+  "title": "Новая задача",
+  "description": "Тест POST",
+  "status": "To Do",
+  "priority": "High",
+  "projectId": 3,
+  "assigneeId": 1,
+  "dueDate": "2026-05-01T00:00:00"
+}
+
+### 5. PUT - Изменить задачу с ID=1
+PUT {{host}}/api/tasks/1
+Content-Type: application/json
+
+{
+  "title": "ИЗМЕНЕННАЯ ЗАДАЧА",
+  "description": "Обновлено через PUT",
+  "status": "Done",
+  "priority": "High",
+  "projectId": 1,
+  "assigneeId": 1,
+  "dueDate": "2026-02-01T00:00:00"
+}
+
+### 6. DELETE - Удалить задачу с ID=2
+DELETE {{host}}/api/tasks/2
+
+### 400 Bad Request (Пустое название)
+POST http://localhost:10000/api/tasks
+Content-Type: application/json
+
+{
+  "title": "",
+  "description": "Пустое название",
+  "status": "To Do",
+  "priority": "High",
+  "projectId": 1,
+  "assigneeId": 1,
+  "dueDate": "2026-05-01T00:00:00"
+}
