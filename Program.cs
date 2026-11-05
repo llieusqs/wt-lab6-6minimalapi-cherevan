@@ -17,11 +17,11 @@ if (!string.IsNullOrWhiteSpace(databaseUrl))
     var userInfo = uri.UserInfo.Split(':', 2);
     
     // Берем порт из URL, если он есть. Если нет (как на Render) — ставим 5432.
-    int port = uri.Port > 0 ? uri.Port : 5432; 
+    int dbPort = uri.Port > 0 ? uri.Port : 5432; 
 
     connectionString =
         $"Host={uri.Host};" +
-        $"Port={port};" + // <-- Вот здесь исправление
+        $"Port={dbPort};" + // <-- Используем dbPort
         $"Database={uri.AbsolutePath.TrimStart('/')};" +
         $"Username={Uri.UnescapeDataString(userInfo[0])};" +
         $"Password={Uri.UnescapeDataString(userInfo[1])};" +
