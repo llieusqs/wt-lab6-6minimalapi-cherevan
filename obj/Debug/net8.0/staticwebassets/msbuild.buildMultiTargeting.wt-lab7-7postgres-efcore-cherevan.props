@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\wt-lab7-7postgres-efcore-cherevan.props" />
+</Project>

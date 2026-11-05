@@ -1,4 +1,4 @@
-@host = http://localhost:5246
+@host = http://localhost:10000
 
 ### 1. GET - Получить все задачи
 GET {{host}}/api/tasks
@@ -40,8 +40,8 @@ Content-Type: application/json
 ### 6. DELETE - Удалить задачу с ID=2
 DELETE {{host}}/api/tasks/2
 
-### 400 Bad Request (Пустое название)
-POST http://localhost:10000/api/tasks
+### 7. 400 Bad Request (Пустое название)
+POST {{host}}/api/tasks
 Content-Type: application/json
 
 {

@@ -1,4 +1,4 @@
-namespace wt_lab6_6minimalapi_cherevan.Models;
+namespace wt_lab7_7postgres_efcore_cherevan.Models;
 
 public class TaskItem
 {
@@ -10,4 +10,6 @@ public class TaskItem
     public int ProjectId { get; set; }
     public int AssigneeId { get; set; }
     public DateTime DueDate { get; set; }
+
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow; 
 }
