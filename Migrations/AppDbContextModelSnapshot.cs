@@ -43,6 +43,10 @@ namespace wt_lab6_6minimalapi_cherevan.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Priority")
                         .IsRequired()
                         .HasColumnType("text");
@@ -70,6 +74,7 @@ namespace wt_lab6_6minimalapi_cherevan.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Прочитать документацию и сделать лабу",
                             DueDate = new DateTime(2026, 5, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Notes = "",
                             Priority = "High",
                             ProjectId = 1,
                             Status = "In Progress",
@@ -82,6 +87,7 @@ namespace wt_lab6_6minimalapi_cherevan.Migrations
                             CreatedAt = new DateTime(2026, 1, 2, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Установить, настроить и подключить к проекту",
                             DueDate = new DateTime(2026, 5, 20, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Notes = "",
                             Priority = "Medium",
                             ProjectId = 1,
                             Status = "Done",
